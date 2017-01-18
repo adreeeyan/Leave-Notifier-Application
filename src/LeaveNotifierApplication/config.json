@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "LeaveNotifierContextConnection":  "Server=(localdb)\\MSSQLLocalDb;Database=LeaveNotifierDb;Trusted_Connection=true;MultipleActiveResultSets=true;"
+  }
+}
