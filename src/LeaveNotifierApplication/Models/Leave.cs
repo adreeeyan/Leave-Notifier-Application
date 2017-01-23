@@ -8,13 +8,13 @@ namespace LeaveNotifierApplication.Models
 {
     public class Leave
     {
-        public int id { get; set; }
-        public Means means { get; set; }
-        public string justification { get; set; }
-        public DateTime dateCreated { get; set; }
-        public DateTime from { get; set; }
-        public DateTime to { get; set; }
-        public Status status { get; set; }
-        public string user { get; set; }
+        public int Id { get; set; }
+        public Means Means { get; set; }
+        public string Justification { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime From { get; set; }
+        public DateTime To { get; set; }
+        public Status Status { get; set; }
+        public string User { get; set; }
     }
 }

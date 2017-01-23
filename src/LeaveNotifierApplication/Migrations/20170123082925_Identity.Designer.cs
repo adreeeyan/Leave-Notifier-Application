@@ -8,9 +8,10 @@ using LeaveNotifierApplication.Models;
 namespace LeaveNotifierApplication.Migrations
 {
     [DbContext(typeof(LeaveNotifierDbContext))]
-    partial class LeaveNotifierContextModelSnapshot : ModelSnapshot
+    [Migration("20170123082925_Identity")]
+    partial class Identity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.2")
@@ -200,79 +201,6 @@ namespace LeaveNotifierApplication.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("OpenIddict.OpenIddictApplication", b =>
-                {
-                    b.Property<string>("Id");
-
-                    b.Property<string>("ClientId");
-
-                    b.Property<string>("ClientSecret");
-
-                    b.Property<string>("DisplayName");
-
-                    b.Property<string>("LogoutRedirectUri");
-
-                    b.Property<string>("RedirectUri");
-
-                    b.Property<string>("Type");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientId")
-                        .IsUnique();
-
-                    b.ToTable("OpenIddictApplications");
-                });
-
-            modelBuilder.Entity("OpenIddict.OpenIddictAuthorization", b =>
-                {
-                    b.Property<string>("Id");
-
-                    b.Property<string>("Scope");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("OpenIddictAuthorizations");
-                });
-
-            modelBuilder.Entity("OpenIddict.OpenIddictScope", b =>
-                {
-                    b.Property<string>("Id");
-
-                    b.Property<string>("Description");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OpenIddictScopes");
-                });
-
-            modelBuilder.Entity("OpenIddict.OpenIddictToken", b =>
-                {
-                    b.Property<string>("Id");
-
-                    b.Property<string>("ApplicationId");
-
-                    b.Property<string>("AuthorizationId");
-
-                    b.Property<string>("Type");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationId");
-
-                    b.HasIndex("AuthorizationId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("OpenIddictTokens");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
@@ -308,28 +236,6 @@ namespace LeaveNotifierApplication.Migrations
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("OpenIddict.OpenIddictAuthorization", b =>
-                {
-                    b.HasOne("LeaveNotifierApplication.Models.LeaveNotifierUser")
-                        .WithMany("Authorizations")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("OpenIddict.OpenIddictToken", b =>
-                {
-                    b.HasOne("OpenIddict.OpenIddictApplication")
-                        .WithMany("Tokens")
-                        .HasForeignKey("ApplicationId");
-
-                    b.HasOne("OpenIddict.OpenIddictAuthorization")
-                        .WithMany("Tokens")
-                        .HasForeignKey("AuthorizationId");
-
-                    b.HasOne("LeaveNotifierApplication.Models.LeaveNotifierUser")
-                        .WithMany("Tokens")
-                        .HasForeignKey("UserId");
                 });
         }
     }

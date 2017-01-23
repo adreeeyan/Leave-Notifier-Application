@@ -7,7 +7,7 @@ using LeaveNotifierApplication.Models;
 
 namespace LeaveNotifierApplication.Migrations
 {
-    [DbContext(typeof(LeaveNotifierContext))]
+    [DbContext(typeof(LeaveNotifierDbContext))]
     [Migration("20170118093144_ChangedModels")]
     partial class ChangedModels
     {

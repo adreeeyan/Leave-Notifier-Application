@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using LeaveNotifierApplication.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace LeaveNotifierApplication
 {
@@ -35,15 +36,23 @@ namespace LeaveNotifierApplication
         {
             services.AddSingleton(_config);
 
-            services.AddDbContext<LeaveNotifierContext>();
+            services.AddIdentity<LeaveNotifierUser, IdentityRole>(config => {
+                            config.User.RequireUniqueEmail = true;
+                            config.Password.RequireNonAlphanumeric = false;
+                            config.Cookies.ApplicationCookie.AutomaticChallenge = false;
+                        })
+                         .AddEntityFrameworkStores<LeaveNotifierDbContext>()
+                         .AddDefaultTokenProviders();
 
-            services.AddTransient<LeaveNotifierContextSeedData>();
+            services.AddDbContext<LeaveNotifierDbContext>();
+
+            services.AddTransient<LeaveNotifierDbContextSeedData>();
 
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, LeaveNotifierContextSeedData seeder)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, LeaveNotifierDbContextSeedData seeder)
         {
             loggerFactory.AddConsole();
 
