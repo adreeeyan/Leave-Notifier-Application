@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace LeaveNotifierApplication.Migrations
+namespace LeaveNotifierApplication.Data.Migrations
 {
     public partial class InitialDatabase : Migration
     {

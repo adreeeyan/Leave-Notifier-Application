@@ -3,21 +3,21 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using LeaveNotifierApplication.Models;
+using LeaveNotifierApplication.Data;
 
-namespace LeaveNotifierApplication.Migrations
+namespace LeaveNotifierApplication.Data.Migrations
 {
     [DbContext(typeof(LeaveNotifierDbContext))]
-    [Migration("20170126085254_InitialDatabase")]
+    [Migration("20170126092729_InitialDatabase")]
     partial class InitialDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.2")
+                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("LeaveNotifierApplication.Models.Leave", b =>
+            modelBuilder.Entity("LeaveNotifierApplication.Data.Models.Leave", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -204,7 +204,7 @@ namespace LeaveNotifierApplication.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("LeaveNotifierApplication.Models.LeaveNotifierUser", b =>
+            modelBuilder.Entity("LeaveNotifierApplication.Data.Models.LeaveNotifierUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser");
 
@@ -217,9 +217,9 @@ namespace LeaveNotifierApplication.Migrations
                     b.HasDiscriminator().HasValue("LeaveNotifierUser");
                 });
 
-            modelBuilder.Entity("LeaveNotifierApplication.Models.Leave", b =>
+            modelBuilder.Entity("LeaveNotifierApplication.Data.Models.Leave", b =>
                 {
-                    b.HasOne("LeaveNotifierApplication.Models.LeaveNotifierUser", "User")
+                    b.HasOne("LeaveNotifierApplication.Data.Models.LeaveNotifierUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });

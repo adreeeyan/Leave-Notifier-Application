@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using LeaveNotifierApplication.Data.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LeaveNotifierApplication.Models
+namespace LeaveNotifierApplication.Data
 {
     public class LeaveNotifierDbContextSeedData
     {

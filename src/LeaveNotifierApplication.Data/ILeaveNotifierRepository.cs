@@ -1,8 +1,8 @@
-﻿using LeaveNotifierApplication.Models;
+﻿using LeaveNotifierApplication.Data.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace LeaveNotifierApplication
+namespace LeaveNotifierApplication.Data
 {
     public interface ILeaveNotifierRepository
     {

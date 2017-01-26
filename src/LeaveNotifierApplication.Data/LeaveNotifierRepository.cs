@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LeaveNotifierApplication.Models;
+using LeaveNotifierApplication.Data.Models;
 
-namespace LeaveNotifierApplication
+namespace LeaveNotifierApplication.Data
 {
     public class LeaveNotifierRepository : ILeaveNotifierRepository
     {

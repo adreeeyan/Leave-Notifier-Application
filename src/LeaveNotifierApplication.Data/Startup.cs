@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using LeaveNotifierApplication.Models;
+using LeaveNotifierApplication.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace LeaveNotifierApplication
+namespace LeaveNotifierApplication.Data
 {
     public class Startup
     {

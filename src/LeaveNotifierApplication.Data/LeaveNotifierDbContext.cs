@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using LeaveNotifierApplication.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace LeaveNotifierApplication.Models
+namespace LeaveNotifierApplication.Data
 {
     public class LeaveNotifierDbContext: IdentityDbContext
     {
