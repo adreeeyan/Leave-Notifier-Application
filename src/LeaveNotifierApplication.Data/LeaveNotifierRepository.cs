@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LeaveNotifierApplication.Data.Models;
@@ -29,6 +30,11 @@ namespace LeaveNotifierApplication.Data
             return _context.Leaves
                 .OrderByDescending(l => l.DateCreated)
                 .ToList();
+        }
+
+        public IEnumerable<LeaveNotifierUser> GetAllUsers()
+        {
+            return _context.Users.Cast<LeaveNotifierUser>().ToList();
         }
 
         public async Task<bool> SaveAllAsync()

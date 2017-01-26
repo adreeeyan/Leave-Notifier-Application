@@ -10,28 +10,28 @@ using System.Threading.Tasks;
 namespace LeaveNotifierApplication.Controllers
 {
     [Route("api/[controller]")]
-    public class LeavesController : Controller
+    public class UsersController : Controller
     {
-        private ILogger<LeavesController> _logger;
+        private ILogger<UsersController> _logger;
         private ILeaveNotifierRepository _repo;
 
-        public LeavesController(ILeaveNotifierRepository repo,
-            ILogger<LeavesController> logger)
+        public UsersController(ILeaveNotifierRepository repo,
+            ILogger<UsersController> logger)
         {
             _repo = repo;
             _logger = logger;
         }
-        [HttpGet]
+
         public IActionResult Get()
         {
             try
             {
-                var leaves = _repo.GetAllLeaves();
-                return Ok(leaves);
+                var users = _repo.GetAllUsers();
+                return Ok(users);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Threw exception while getting all Leaves: {ex}");
+                _logger.LogError($"Exception occured when getting all users: {ex}");
             }
             return BadRequest();
         }

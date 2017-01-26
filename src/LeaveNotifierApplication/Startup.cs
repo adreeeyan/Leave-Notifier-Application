@@ -38,7 +38,8 @@ namespace LeaveNotifierApplication
             services.AddSingleton(_config);
 
             // Add the db stuffs
-            services.AddDbContext<LeaveNotifierDbContext>(ServiceLifetime.Scoped);
+            services.AddDbContext<LeaveNotifierDbContext>(ServiceLifetime.Scoped)
+                .AddIdentity<LeaveNotifierUser, IdentityRole>();
             services.AddScoped<ILeaveNotifierRepository, LeaveNotifierRepository>();
             services.AddTransient<LeaveNotifierDbContextSeedData>();
 

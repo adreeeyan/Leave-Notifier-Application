@@ -73,16 +73,36 @@ namespace LeaveNotifierApplication.Data
 
         private void CreateLeaves()
         {
+            var user1 = (LeaveNotifierUser)_context.Users.First(user => user.UserName == "user1");
             var firstLeave = new Leave()
             {
                 DateCreated = DateTime.UtcNow,
                 Justification = "first sample leave",
                 Means = Means.EMAIL,
                 Status = Status.UNFILED,
-                User = null // todo
+                User = user1
             };
 
-            _context.Leaves.Add(firstLeave);
+            var user2 = (LeaveNotifierUser)_context.Users.First(user => user.UserName == "user2");
+            var secondLeave = new Leave()
+            {
+                DateCreated = DateTime.UtcNow,
+                Justification = "second sample leave",
+                Means = Means.EMAIL,
+                Status = Status.UNFILED,
+                User = user2
+            };
+            
+            var thirdLeave = new Leave()
+            {
+                DateCreated = DateTime.UtcNow,
+                Justification = "third sample leave",
+                Means = Means.SMS,
+                Status = Status.FILED,
+                User = user1
+            };
+
+            _context.Leaves.AddRange(firstLeave, secondLeave, thirdLeave);
         }
 
         private async Task CreateUser(string username, string password, string role)
@@ -98,7 +118,7 @@ namespace LeaveNotifierApplication.Data
                 LastModifiedDate = lastModifiedDate
             };
 
-            if (await _userManager.FindByIdAsync(user.Id) == null)
+            if (await _userManager.FindByIdAsync(user.UserName) == null)
             {
                 await _userManager.CreateAsync(user, password);
                 await _userManager.AddToRoleAsync(user, role);
