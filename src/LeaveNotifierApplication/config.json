@@ -1,14 +1,5 @@
 {
   "ConnectionStrings": {
     "LeaveNotifierDbContextConnection": "Server=(localdb)\\MSSQLLocalDb;Database=LeaveNotifierDb;Trusted_Connection=true;MultipleActiveResultSets=true;"
-  },
-  "Authentication": {
-    "OpenIddict": {
-      "ApplicationId": "LeaveNotifier",
-      "DisplayName": "LeaveNotifier",
-      "TokenEndPoint": "/api/connect/token",
-      "ClientId": "LeaveNotifier",
-      "ClientSecret": "m213y86s21e90c099r2212et537key"
-    }
   }
 }

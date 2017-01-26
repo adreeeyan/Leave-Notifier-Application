@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using OpenIddict;
 
 namespace LeaveNotifierApplication.Models
 {
-    public class LeaveNotifierDbContext: OpenIddictDbContext<LeaveNotifierUser>
+    public class LeaveNotifierDbContext: IdentityDbContext
     {
         private IConfigurationRoot _config;
 

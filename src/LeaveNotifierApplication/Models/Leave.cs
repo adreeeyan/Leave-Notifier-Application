@@ -15,6 +15,6 @@ namespace LeaveNotifierApplication.Models
         public DateTime From { get; set; }
         public DateTime To { get; set; }
         public Status Status { get; set; }
-        public string User { get; set; }
+        public LeaveNotifierUser User { get; set; }
     }
 }
