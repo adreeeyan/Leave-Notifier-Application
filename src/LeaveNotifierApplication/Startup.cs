@@ -10,6 +10,10 @@ using Microsoft.Extensions.Logging;
 using LeaveNotifierApplication.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using LeaveNotifierApplication.Data.Models;
+using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace LeaveNotifierApplication
 {
@@ -38,14 +42,48 @@ namespace LeaveNotifierApplication
             services.AddSingleton(_config);
 
             // Add the db stuffs
-            services.AddDbContext<LeaveNotifierDbContext>(ServiceLifetime.Scoped)
-                .AddIdentity<LeaveNotifierUser, IdentityRole>();
+            services.AddDbContext<LeaveNotifierDbContext>(ServiceLifetime.Scoped);
             services.AddScoped<ILeaveNotifierRepository, LeaveNotifierRepository>();
             services.AddTransient<LeaveNotifierDbContextSeedData>();
+
+            // Add our mapper
+            services.AddAutoMapper();
 
             // Add the Identity
             services.AddIdentity<LeaveNotifierUser, IdentityRole>()
                 .AddEntityFrameworkStores<LeaveNotifierDbContext>();
+
+            services.Configure<IdentityOptions>(config =>
+            {
+                config.Cookies.ApplicationCookie.Events = new CookieAuthenticationEvents()
+                {
+                    OnRedirectToLogin = (ctx) =>
+                    {
+                        if (ctx.Request.Path.StartsWithSegments("/api") && ctx.Response.StatusCode == 200)
+                        {
+                            ctx.Response.StatusCode = 401;
+                        }
+
+                        return Task.CompletedTask;
+                    },
+
+                    OnRedirectToAccessDenied = (ctx) =>
+                    {
+                        if (ctx.Request.Path.StartsWithSegments("/api") && ctx.Response.StatusCode == 200)
+                        {
+                            ctx.Response.StatusCode = 403;
+                        }
+
+                        return Task.CompletedTask;
+                    }
+                };
+            });
+
+            // Add authorization configs
+            services.AddAuthorization(cfg =>
+            {
+                cfg.AddPolicy("SuperUsers", p => p.RequireClaim("SuperUser", "True"));
+            });
 
             // Add framework services.
             services.AddMvc();
@@ -63,6 +101,21 @@ namespace LeaveNotifierApplication
 
             // Use the identity
             app.UseIdentity();
+
+            // Middleware for JWT Authentication
+            app.UseJwtBearerAuthentication(new JwtBearerOptions()
+            {
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidIssuer = _config["Tokens:Issuer"],
+                    ValidAudience = _config["Tokens:Audience"],
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"])),
+                    ValidateLifetime = true
+                }
+            });
 
             app.UseMvc();
 

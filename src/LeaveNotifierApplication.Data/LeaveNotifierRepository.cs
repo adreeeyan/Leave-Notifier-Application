@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LeaveNotifierApplication.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace LeaveNotifierApplication.Data
 {
@@ -28,6 +29,7 @@ namespace LeaveNotifierApplication.Data
         public IEnumerable<Leave> GetAllLeaves()
         {
             return _context.Leaves
+                .Include(l => l.User)
                 .OrderByDescending(l => l.DateCreated)
                 .ToList();
         }

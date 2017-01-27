@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace LeaveNotifierApplication.Data
@@ -66,9 +67,9 @@ namespace LeaveNotifierApplication.Data
             await CreateUser("admin", "P@ssw0rd", Role.ADMINISTRATOR);
 
             // Create normal users
-            await CreateUser("user1", "P@ssw0rd", Role.REGISTERED);
-            await CreateUser("user2", "P@ssw0rd", Role.REGISTERED);
-            await CreateUser("user3", "P@ssw0rd", Role.REGISTERED);
+            await CreateUser("user1", "P@ssw0rd", Role.REGISTERED, "John", "Wayne");
+            await CreateUser("user2", "P@ssw0rd", Role.REGISTERED, "Sudyok", "Mati");
+            await CreateUser("user3", "P@ssw0rd", Role.REGISTERED, "Mel", "Gibson");
         }
 
         private void CreateLeaves()
@@ -105,7 +106,7 @@ namespace LeaveNotifierApplication.Data
             _context.Leaves.AddRange(firstLeave, secondLeave, thirdLeave);
         }
 
-        private async Task CreateUser(string username, string password, string role)
+        private async Task CreateUser(string username, string password, string role, string firstName = "", string lastName = "")
         {
             DateTime dateCreated = DateTime.Now;
             DateTime lastModifiedDate = DateTime.Now;
@@ -115,13 +116,16 @@ namespace LeaveNotifierApplication.Data
                 UserName = username,
                 Email = username + "@kyoceraleaves.com",
                 CreatedDate = dateCreated,
-                LastModifiedDate = lastModifiedDate
+                LastModifiedDate = lastModifiedDate,
+                FirstName = firstName,
+                LastName = lastName
             };
 
             if (await _userManager.FindByIdAsync(user.UserName) == null)
             {
                 await _userManager.CreateAsync(user, password);
                 await _userManager.AddToRoleAsync(user, role);
+                await _userManager.AddClaimAsync(user, new Claim(role == Role.ADMINISTRATOR ? "SuperUser" : "RegularUser", "True"));
                 user.EmailConfirmed = true;
                 user.LockoutEnabled = false;
             }

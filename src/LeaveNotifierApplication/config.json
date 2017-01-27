@@ -9,5 +9,10 @@
   },
   "ConnectionStrings": {
     "LeaveNotifierDbContextConnection": "Server=(localdb)\\MSSQLLocalDb;Database=LeaveNotifierDb;Trusted_Connection=true;MultipleActiveResultSets=true;"
+  },
+  "Tokens": {
+    "Issuer": "http://localhost:8088",
+    "Audience": "http://localhost:8088",
+    "Key": "t231h-12is4398i91s0a2385se0*c**12r910e3t"
   }
 }
