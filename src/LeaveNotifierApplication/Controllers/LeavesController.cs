@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using LeaveNotifierApplication.Filters;
 
 namespace LeaveNotifierApplication.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
+    [ValidateModel]
     public class LeavesController : Controller
     {
         private ILogger<LeavesController> _logger;
