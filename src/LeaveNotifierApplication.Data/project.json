@@ -18,7 +18,8 @@
     "Microsoft.NETCore.App": {
       "version": "1.0.1",
       "type": "platform"
-    }
+    },
+    "Microsoft.EntityFrameworkCore.Sqlite": "1.0.0"
   },
 
   "tools": {

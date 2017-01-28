@@ -1,4 +1,5 @@
-﻿using LeaveNotifierApplication.Data.Models;
+﻿using System.Runtime.InteropServices;
+using LeaveNotifierApplication.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +21,11 @@ namespace LeaveNotifierApplication.Data
         {
             base.OnConfiguring(optionsBuilder);
 
-            optionsBuilder.UseSqlServer(_config["ConnectionStrings:LeaveNotifierDbContextConnection"]);
+            if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows)){
+                optionsBuilder.UseSqlServer(_config["ConnectionStrings:Windows:LeaveNotifierDbContextConnection"]);                
+            }else{
+                optionsBuilder.UseSqlite(_config["ConnectionStrings:Linux:LeaveNotifierDbContextConnection"]);
+            }
         }
 
     }

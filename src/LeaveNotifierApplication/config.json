@@ -8,7 +8,12 @@
     }
   },
   "ConnectionStrings": {
-    "LeaveNotifierDbContextConnection": "Server=(localdb)\\MSSQLLocalDb;Database=LeaveNotifierDb;Trusted_Connection=true;MultipleActiveResultSets=true;"
+    "Windows": {
+      "LeaveNotifierDbContextConnection": "Server=(localdb)\\MSSQLLocalDb;Database=LeaveNotifierDb;Trusted_Connection=true;MultipleActiveResultSets=true;"
+    },
+    "Linux":{
+      "LeaveNotifierDbContextConnection": "Data source=leavesdb.sqlite"
+    }
   },
   "Tokens": {
     "Issuer": "http://localhost:8088",

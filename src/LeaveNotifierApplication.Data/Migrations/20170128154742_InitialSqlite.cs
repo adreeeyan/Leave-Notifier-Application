@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace LeaveNotifierApplication.Data.Migrations
 {
-    public partial class InitialDatabase : Migration
+    public partial class InitialSqlite : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,7 +42,10 @@ namespace LeaveNotifierApplication.Data.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: true),
-                    LastModifiedDate = table.Column<DateTime>(nullable: true)
+                    FirstName = table.Column<string>(nullable: true),
+                    LastModifiedDate = table.Column<DateTime>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    MiddleName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -70,7 +71,7 @@ namespace LeaveNotifierApplication.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Autoincrement", true),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
                     RoleId = table.Column<string>(nullable: false)
@@ -91,7 +92,7 @@ namespace LeaveNotifierApplication.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Autoincrement", true),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     From = table.Column<DateTime>(nullable: false),
                     Justification = table.Column<string>(nullable: true),
@@ -116,7 +117,7 @@ namespace LeaveNotifierApplication.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Autoincrement", true),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
