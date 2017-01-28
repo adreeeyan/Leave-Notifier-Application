@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
+using LeaveNotifierApplication.Models;
 
 namespace LeaveNotifierApplication.Controllers
 {
@@ -28,7 +30,7 @@ namespace LeaveNotifierApplication.Controllers
         {
             try
             {
-                var users = _repo.GetAllUsers();
+                var users = _mapper.Map<IEnumerable<LeaveNotifierUserModel>>(_repo.GetAllUsers());
                 return Ok(users);
             }
             catch (Exception ex)
@@ -36,6 +38,22 @@ namespace LeaveNotifierApplication.Controllers
                 _logger.LogError($"Exception occured when getting all users: {ex}");
             }
             return BadRequest();
+        }
+
+        [Authorize(Policy = "SuperUsers")]
+        [HttpGet("{userName}")]
+        public IActionResult Get(string userName)
+        {
+            try
+            {
+                var user = _mapper.Map<LeaveNotifierUserModel>(_repo.GetUserByUserName(userName));
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Exception occured when getting user: {ex}");
+            }
+            return BadRequest($"Cannot get user ({userName}) information.");
         }
     }
 }

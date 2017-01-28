@@ -7,7 +7,11 @@ namespace LeaveNotifierApplication.Models
     {
         public LeaveMappingProfile()
         {
-            CreateMap<Leave, LeaveModel>();
+            CreateMap<Leave, LeaveModel>()
+                .ReverseMap();
+
+            CreateMap<LeaveNotifierUser, LeaveNotifierUserModel>()
+                .ReverseMap();
         }
     }
 }
