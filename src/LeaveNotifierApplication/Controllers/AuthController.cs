@@ -41,37 +41,6 @@ namespace LeaveNotifierApplication.Controllers
             _logger = logger;
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] CredentialModel model)
-        {
-            try
-            {
-                var result = await _signInMgr.PasswordSignInAsync(model.UserName, model.Password, false, false);
-                if (result.Succeeded)
-                {
-                    return Ok();
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Exception thrown while logging in: {ex}");
-            }
-
-            return BadRequest("Failed to login.");
-        }
-
-        //public IActionResult Logout()
-        //{
-        //    try
-        //    {
-
-        //    }
-        //    catch (Exception)
-        //    {
-                
-        //    }
-        //}
-
         [HttpPost("token")]
         public async Task<IActionResult> CreateToken([FromBody] CredentialModel model)
         {
