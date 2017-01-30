@@ -2,29 +2,29 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": ".NET Core Launch (web)",
+            "name": ".NET Core Launch",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/src/LeaveNotifierApplication.Data/bin/Debug/netcoreapp1.0/LeaveNotifierApplication.Data.dll",
+            "program": "${workspaceRoot}/src/LeaveNotifierApplication/bin/Debug/netcoreapp1.0/LeaveNotifierApplication.dll",
             "args": [],
-            "cwd": "${workspaceRoot}",
+            "cwd": "${workspaceRoot}/src/LeaveNotifierApplication",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
-            "launchBrowser": {
-                "enabled": true,
-                "args": "${auto-detect-url}",
-                "windows": {
-                    "command": "cmd.exe",
-                    "args": "/C start ${auto-detect-url}"
-                },
-                "osx": {
-                    "command": "open"
-                },
-                "linux": {
-                    "command": "xdg-open"
-                }
-            },
+            // "launchBrowser": {
+            //     "enabled": true,
+            //     "args": "${auto-detect-url}",
+            //     "windows": {
+            //         "command": "cmd.exe",
+            //         "args": "/C start ${auto-detect-url}"
+            //     },
+            //     "osx": {
+            //         "command": "open"
+            //     },
+            //     "linux": {
+            //         "command": "xdg-open"
+            //     }
+            // },
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },

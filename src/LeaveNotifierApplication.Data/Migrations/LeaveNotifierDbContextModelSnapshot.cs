@@ -13,7 +13,8 @@ namespace LeaveNotifierApplication.Data.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431");
+                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("LeaveNotifierApplication.Data.Models.Leave", b =>
                 {
@@ -31,6 +32,8 @@ namespace LeaveNotifierApplication.Data.Migrations
                     b.Property<int>("Status");
 
                     b.Property<DateTime>("To");
+
+                    b.Property<int>("Type");
 
                     b.Property<string>("UserId");
 

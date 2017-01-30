@@ -7,7 +7,7 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}/src/LeaveNotifierApplication.Data/project.json"
+                "${workspaceRoot}/src/LeaveNotifierApplication/project.json"
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"

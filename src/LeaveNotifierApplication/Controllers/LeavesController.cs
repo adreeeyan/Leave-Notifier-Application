@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using LeaveNotifierApplication.Filters;
 using Microsoft.AspNetCore.Identity;
 using LeaveNotifierApplication.Data.Models;
+using LeaveNotifierApplication.Data.Extensions;
 using System.Threading.Tasks;
 
 namespace LeaveNotifierApplication.Controllers
@@ -35,11 +36,12 @@ namespace LeaveNotifierApplication.Controllers
         }
 
         [HttpGet("[controller]")]
-        public IActionResult Get()
+        public IActionResult Get(string sortOrder = "DateCreated", bool asc = false)
         {
             try
             {
-                var leaves = _mapper.Map<IEnumerable<LeaveModel>>(_repo.GetAllLeaves());
+                var items = _repo.GetAllLeaves().SortBy(sortOrder, asc);
+                var leaves = _mapper.Map<IEnumerable<LeaveModel>>(items);
                 return Ok(leaves);
             }
             catch (Exception ex)
@@ -66,7 +68,7 @@ namespace LeaveNotifierApplication.Controllers
         }
 
         [HttpGet("users/{userName}/[controller]")]
-        public async Task<IActionResult> GetLeavesByUserName(string userName)
+        public async Task<IActionResult> GetLeavesByUserName(string userName, string sortOrder = "DateCreated", bool asc = false)
         {
             try
             {
@@ -76,8 +78,8 @@ namespace LeaveNotifierApplication.Controllers
                 {
                     return NotFound($"User {userName} not found");
                 }
-
-                var leaves = _mapper.Map<IEnumerable<LeaveModel>>(_repo.GetLeavesByUserName(userName));
+                var items = _repo.GetLeavesByUserName(userName).SortBy(sortOrder, asc);
+                var leaves = _mapper.Map<IEnumerable<LeaveModel>>(items);
                 return Ok(leaves);
             }
             catch (Exception ex)

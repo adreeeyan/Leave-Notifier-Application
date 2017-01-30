@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LeaveNotifierApplication.Data.Models;
@@ -30,7 +29,6 @@ namespace LeaveNotifierApplication.Data
         {
             return _context.Leaves
                 .Include(l => l.User)
-                .OrderByDescending(l => l.DateCreated)
                 .ToList();
         }
 
@@ -38,7 +36,6 @@ namespace LeaveNotifierApplication.Data
         {
             return _context.Leaves
                 .Where(l => l.User.UserName == userName)
-                .OrderByDescending(l => l.DateCreated)
                 .ToList();
         }
 

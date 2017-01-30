@@ -8,13 +8,14 @@ using LeaveNotifierApplication.Data;
 namespace LeaveNotifierApplication.Data.Migrations
 {
     [DbContext(typeof(LeaveNotifierDbContext))]
-    [Migration("20170128154742_InitialSqlite")]
-    partial class InitialSqlite
+    [Migration("20170130044149_AddTypes")]
+    partial class AddTypes
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431");
+                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("LeaveNotifierApplication.Data.Models.Leave", b =>
                 {
@@ -32,6 +33,8 @@ namespace LeaveNotifierApplication.Data.Migrations
                     b.Property<int>("Status");
 
                     b.Property<DateTime>("To");
+
+                    b.Property<int>("Type");
 
                     b.Property<string>("UserId");
 

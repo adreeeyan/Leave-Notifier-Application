@@ -14,8 +14,7 @@ namespace LeaveNotifierApplication.Data
         // Leaves
         IEnumerable<Leave> GetAllLeaves();
         IEnumerable<Leave> GetLeavesByUserName(string userName);
-        Leave GetLeaveById(int id);
-        
+        Leave GetLeaveById(int id);        
 
         // Users
         IEnumerable<LeaveNotifierUser> GetAllUsers();

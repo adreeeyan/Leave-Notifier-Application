@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace LeaveNotifierApplication.Data
 {
-    public class LeaveNotifierDbContext: IdentityDbContext
+    public class LeaveNotifierDbContext : IdentityDbContext
     {
         private IConfigurationRoot _config;
 
@@ -21,9 +21,12 @@ namespace LeaveNotifierApplication.Data
         {
             base.OnConfiguring(optionsBuilder);
 
-            if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows)){
-                optionsBuilder.UseSqlServer(_config["ConnectionStrings:Windows:LeaveNotifierDbContextConnection"]);                
-            }else{
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                optionsBuilder.UseSqlServer(_config["ConnectionStrings:Windows:LeaveNotifierDbContextConnection"]);
+            }
+            else
+            {
                 optionsBuilder.UseSqlite(_config["ConnectionStrings:Linux:LeaveNotifierDbContextConnection"]);
             }
         }

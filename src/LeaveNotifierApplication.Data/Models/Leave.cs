@@ -10,6 +10,7 @@ namespace LeaveNotifierApplication.Data.Models
         public DateTime DateCreated { get; set; }
         public DateTime From { get; set; }
         public DateTime To { get; set; }
+        public LeaveType Type { get; set; }
         public Status Status { get; set; }
         public LeaveNotifierUser User { get; set; }
     }

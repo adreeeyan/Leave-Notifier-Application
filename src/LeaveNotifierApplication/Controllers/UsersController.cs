@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using LeaveNotifierApplication.Models;
+using LeaveNotifierApplication.Data.Extensions;
 
 namespace LeaveNotifierApplication.Controllers
 {
@@ -26,11 +27,12 @@ namespace LeaveNotifierApplication.Controllers
         }
 
         [Authorize(Policy = "SuperUsers")]
-        public IActionResult Get()
+        public IActionResult Get(string sortOrder = "CreatedDate", bool asc = false)
         {
             try
             {
-                var users = _mapper.Map<IEnumerable<LeaveNotifierUserModel>>(_repo.GetAllUsers());
+                var items = _repo.GetAllUsers().SortBy(sortOrder, asc);
+                var users = _mapper.Map<IEnumerable<LeaveNotifierUserModel>>(items);
                 return Ok(users);
             }
             catch (Exception ex)
