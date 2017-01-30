@@ -27,11 +27,11 @@ namespace LeaveNotifierApplication.Controllers
         }
 
         [Authorize(Policy = "SuperUsers")]
-        public IActionResult Get(string sortOrder = "CreatedDate", bool asc = false)
+        public IActionResult Get(string[] searchKey, string[] searchValue, bool[] isFull, string sortOrder = "CreatedDate", bool asc = false)
         {
             try
             {
-                var items = _repo.GetAllUsers().SortBy(sortOrder, asc);
+                var items = _repo.GetAllUsers().SortBy(sortOrder, asc).Where(searchKey, searchValue, isFull);
                 var users = _mapper.Map<IEnumerable<LeaveNotifierUserModel>>(items);
                 return Ok(users);
             }
