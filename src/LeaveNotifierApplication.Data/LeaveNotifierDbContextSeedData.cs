@@ -81,7 +81,9 @@ namespace LeaveNotifierApplication.Data
                 Justification = "first sample leave",
                 Means = Means.EMAIL,
                 Status = Status.UNFILED,
-                User = user1
+                User = user1,
+                From = DateTime.Today.AddDays(-2),
+                To = DateTime.Today.AddDays(3)
             };
 
             var user2 = (LeaveNotifierUser)_context.Users.First(user => user.UserName == "user2");
@@ -91,16 +93,20 @@ namespace LeaveNotifierApplication.Data
                 Justification = "second sample leave",
                 Means = Means.EMAIL,
                 Status = Status.UNFILED,
-                User = user2
+                User = user2,
+                From = DateTime.Today,
+                To = DateTime.Today.AddDays(2)
             };
-            
+
             var thirdLeave = new Leave()
             {
                 DateCreated = DateTime.UtcNow,
                 Justification = "third sample leave",
                 Means = Means.SMS,
                 Status = Status.FILED,
-                User = user1
+                User = user1,
+                From = DateTime.Today.AddDays(4),
+                To = DateTime.Today.AddDays(4).AddHours(5)
             };
 
             _context.Leaves.AddRange(firstLeave, secondLeave, thirdLeave);
