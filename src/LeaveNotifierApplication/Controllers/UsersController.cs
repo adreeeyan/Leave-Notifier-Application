@@ -27,6 +27,7 @@ namespace LeaveNotifierApplication.Controllers
         }
 
         [Authorize(Policy = "SuperUsers")]
+        [HttpGet]
         public IActionResult Get(string[] searchKey, string[] searchValue, bool[] isFull, string sortOrder = "CreatedDate", bool asc = false)
         {
             try

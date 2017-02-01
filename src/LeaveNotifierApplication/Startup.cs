@@ -11,6 +11,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Swashbuckle.Swagger.Model;
 
 namespace LeaveNotifierApplication
 {
@@ -85,6 +86,18 @@ namespace LeaveNotifierApplication
             // Add framework services.
             services.AddMvc();
 
+            // Register the Swagger generator
+            services.AddSwaggerGen(options =>
+            {
+                options.SingleApiVersion(new Info
+                {
+                    Version = "v1",
+                    Title = "LeaveNotifier API",
+                    Description = "API Usage",
+                    TermsOfService = "None"
+                });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -113,6 +126,14 @@ namespace LeaveNotifierApplication
                     ValidateLifetime = true
                 }
             });
+
+            // Enable swagger file
+            app.UseSwagger();
+
+            // Enable the swagger UI (this should be dev only)
+            if(_env.IsDevelopment()){
+                app.UseSwaggerUi();
+            }
 
             app.UseMvc();
 
