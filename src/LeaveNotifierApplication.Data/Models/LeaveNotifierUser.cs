@@ -1,9 +1,9 @@
 ﻿using System;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using OpenIddict;
 
 namespace LeaveNotifierApplication.Data.Models
 {
-    public class LeaveNotifierUser : IdentityUser
+    public class LeaveNotifierUser : OpenIddictUser
     {
         public LeaveNotifierUser()
         {

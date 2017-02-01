@@ -8,9 +8,10 @@ using LeaveNotifierApplication.Data;
 namespace LeaveNotifierApplication.Data.Migrations
 {
     [DbContext(typeof(LeaveNotifierDbContext))]
-    partial class LeaveNotifierDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170201085814_OpenIddictv2")]
+    partial class OpenIddictv2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")

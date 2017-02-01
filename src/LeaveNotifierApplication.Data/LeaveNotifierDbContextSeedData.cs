@@ -6,6 +6,8 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using OpenIddict;
+using CryptoHelper;
 
 namespace LeaveNotifierApplication.Data
 {
@@ -32,6 +34,13 @@ namespace LeaveNotifierApplication.Data
             // Create the Db if it doesn't exist
             _context.Database.EnsureCreated();
 
+            // Seed the applications
+            // For OpenIddict
+            if (!_context.Applications.Any())
+            {
+                CreateApplications();
+            }
+
             // Seed the roles
             if (!_context.Roles.Any())
             {
@@ -53,6 +62,21 @@ namespace LeaveNotifierApplication.Data
             // Actually save the changes to the db
             await _context.SaveChangesAsync();
 
+        }
+
+        private void CreateApplications()
+        {
+            _context.Applications.Add(new OpenIddictApplication
+            {
+                Id = "LeaveNotifier",
+                DisplayName = "LeaveNotifier",
+                RedirectUri = "/api/connect/token",
+                LogoutRedirectUri = "/",
+                ClientId = "LeaveNotifier",
+                ClientSecret = Crypto.HashPassword("1234567890_my_client_secret"),
+                Type = OpenIddictConstants.ClientTypes.Public
+            });
+            _context.SaveChanges();
         }
 
         private async Task CreateRoles()

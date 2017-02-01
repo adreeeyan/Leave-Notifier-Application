@@ -10,7 +10,6 @@ using LeaveNotifierApplication.Data.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Swashbuckle.Swagger.Model;
 
 namespace LeaveNotifierApplication
@@ -98,6 +97,31 @@ namespace LeaveNotifierApplication
                 });
             });
 
+            // Register the OpenIddict services, including the default Entity Framework stores.
+            services.AddOpenIddict<LeaveNotifierUser, LeaveNotifierDbContext>()
+            // Integrate with EFCore
+            .AddEntityFramework<LeaveNotifierDbContext>()
+            // Use Json Web Tokens (JWT)
+            .UseJsonWebTokens()
+            // Set a custom token endpoint (default is /auth/token)
+            .EnableTokenEndpoint("/api/auth/token")
+            // Set a custom auth endpoint (default is /auth/authorize)
+            .EnableAuthorizationEndpoint("/api/auth/authorize")
+            // Set a custom revoker endpoint (default is /auth/revoke)
+            .EnableRevocationEndpoint("/api/auth/revoke")
+            // Allow client applications to use the grant_type=password flow.
+            .AllowPasswordFlow()
+            // Enable support for both authorization & implicit flows
+            .AllowAuthorizationCodeFlow()
+            .AllowImplicitFlow()
+            // Allow the client to refresh tokens.
+            .AllowRefreshTokenFlow()
+            // Disable the HTTPS requirement (not recommended in production)
+            .DisableHttpsRequirement()
+            // Register a new ephemeral key for development.
+            // We will register a X.509 certificate in production.
+            .AddEphemeralSigningKey();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -112,17 +136,23 @@ namespace LeaveNotifierApplication
             // Use the identity
             app.UseIdentity();
 
+            // Use OpenIddict
+            app.UseOpenIddict();
+
             // Middleware for JWT Authentication
             app.UseJwtBearerAuthentication(new JwtBearerOptions()
             {
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
+                RequireHttpsMetadata = false,
+                Authority = "http://localhost:5000",
                 TokenValidationParameters = new TokenValidationParameters()
                 {
-                    ValidIssuer = _config["Tokens:Issuer"],
-                    ValidAudience = _config["Tokens:Audience"],
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"])),
+                    // ValidIssuer = _config["Tokens:Issuer"],
+                    // ValidAudience = _config["Tokens:Audience"],
+                    // ValidateIssuerSigningKey = true,
+                    // IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"])),
+                    ValidateAudience = false,
                     ValidateLifetime = true
                 }
             });
@@ -131,7 +161,8 @@ namespace LeaveNotifierApplication
             app.UseSwagger();
 
             // Enable the swagger UI (this should be dev only)
-            if(_env.IsDevelopment()){
+            if (_env.IsDevelopment())
+            {
                 app.UseSwaggerUi();
             }
 

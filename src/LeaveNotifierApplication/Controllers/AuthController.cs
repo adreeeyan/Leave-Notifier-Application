@@ -15,7 +15,8 @@ using System.Threading.Tasks;
 
 namespace LeaveNotifierApplication.Controllers
 {
-    [Route("api/[controller]")]
+    // We won't use this controller, OpenIddict provides what we need
+    // [Route("api/[controller]")]
     public class AuthController : Controller
     {
         private LeaveNotifierDbContext _context;
