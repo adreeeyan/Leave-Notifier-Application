@@ -9,9 +9,10 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using LeaveNotifierApplication.Data.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Swashbuckle.Swagger.Model;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Swashbuckle.AspNetCore.Swagger;
+using LeaveNotifierApplication.Filters;
 
 namespace LeaveNotifierApplication
 {
@@ -89,13 +90,15 @@ namespace LeaveNotifierApplication
             // Register the Swagger generator
             services.AddSwaggerGen(options =>
             {
-                options.SingleApiVersion(new Info
+                options.SwaggerDoc("v1", new Info
                 {
                     Version = "v1",
                     Title = "LeaveNotifier API",
                     Description = "API Usage",
                     TermsOfService = "None"
                 });
+
+                options.OperationFilter<SwaggerOperationFilter>();
             });
         }
 
@@ -126,16 +129,19 @@ namespace LeaveNotifierApplication
                 }
             });
 
+            app.UseMvc();
+
             // Enable swagger file
             app.UseSwagger();
 
             // Enable the swagger UI (this should be dev only)
             if (_env.IsDevelopment())
             {
-                app.UseSwaggerUi();
+                app.UseSwaggerUi(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
+                });
             }
-
-            app.UseMvc();
 
             seeder.EnsureSeedData().Wait();
         }

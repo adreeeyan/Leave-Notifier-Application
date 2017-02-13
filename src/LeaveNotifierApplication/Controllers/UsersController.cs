@@ -28,7 +28,7 @@ namespace LeaveNotifierApplication.Controllers
 
         [Authorize(Policy = "SuperUsers")]
         [HttpGet]
-        public IActionResult Get(QueryModel query)
+        public IActionResult Get([FromQuery] QueryModel query)
         {
             try
             {

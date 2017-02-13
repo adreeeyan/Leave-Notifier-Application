@@ -36,7 +36,7 @@ namespace LeaveNotifierApplication.Controllers
         }
 
         [HttpGet("[controller]")]
-        public IActionResult Get(QueryModel query)
+        public IActionResult Get([FromQuery] QueryModel query)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace LeaveNotifierApplication.Controllers
         }
 
         [HttpGet("users/{userName}/[controller]")]
-        public async Task<IActionResult> GetLeavesByUserName(string userName, QueryModel query)
+        public async Task<IActionResult> GetLeavesByUserName(string userName, [FromQuery] QueryModel query)
         {
             try
             {
