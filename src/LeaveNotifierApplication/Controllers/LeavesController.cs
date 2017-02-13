@@ -36,11 +36,11 @@ namespace LeaveNotifierApplication.Controllers
         }
 
         [HttpGet("[controller]")]
-        public IActionResult Get(string[] searchKey, string[] searchValue, bool[] isFull, string sortOrder = "DateCreated", bool asc = false)
+        public IActionResult Get(QueryModel query)
         {
             try
             {
-                var items = _repo.GetAllLeaves().SortBy(sortOrder, asc).Where(searchKey, searchValue, isFull);
+                var items = _repo.GetAllLeaves().SortBy(query.SortOrder, query.IsAsc).Where(query.SearchKey, query.SearchValue, query.IsFull);
                 var leaves = _mapper.Map<IEnumerable<LeaveModel>>(items);
                 return Ok(leaves);
             }
@@ -68,7 +68,7 @@ namespace LeaveNotifierApplication.Controllers
         }
 
         [HttpGet("users/{userName}/[controller]")]
-        public async Task<IActionResult> GetLeavesByUserName(string userName, string[] searchKey, string[] searchValue, bool[] isFull, string sortOrder = "DateCreated", bool asc = false)
+        public async Task<IActionResult> GetLeavesByUserName(string userName, QueryModel query)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace LeaveNotifierApplication.Controllers
                 {
                     return NotFound($"User {userName} not found");
                 }
-                var items = _repo.GetLeavesByUserName(userName).SortBy(sortOrder, asc).Where(searchKey, searchValue, isFull);
+                var items = _repo.GetLeavesByUserName(userName).SortBy(query.SortOrder, query.IsAsc).Where(query.SearchKey, query.SearchValue, query.IsFull);
                 var leaves = _mapper.Map<IEnumerable<LeaveModel>>(items);
                 return Ok(leaves);
             }
