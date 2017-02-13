@@ -1,22 +1,21 @@
 ﻿using LeaveNotifierApplication.Data;
 using LeaveNotifierApplication.Data.Models;
-using LeaveNotifierApplication.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
+using LeaveNotifierApplication.Models;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using System;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace LeaveNotifierApplication.Controllers
 {
-    // We won't use this controller, OpenIddict provides what we need
-    // [Route("api/[controller]")]
+    [Route("api/[controller]")]
     public class AuthController : Controller
     {
         private LeaveNotifierDbContext _context;
@@ -47,9 +46,9 @@ namespace LeaveNotifierApplication.Controllers
             try
             {
                 var user = await _userMgr.FindByNameAsync(model.UserName);
-                if(user != null)
+                if (user != null)
                 {
-                    if(_hasher.VerifyHashedPassword(user, user.PasswordHash, model.Password) == PasswordVerificationResult.Success)
+                    if (_hasher.VerifyHashedPassword(user, user.PasswordHash, model.Password) == PasswordVerificationResult.Success)
                     {
                         var userClaims = await _userMgr.GetClaimsAsync(user);
 
@@ -66,7 +65,7 @@ namespace LeaveNotifierApplication.Controllers
                             issuer: _config["Tokens:Issuer"],
                             audience: _config["Tokens:Audience"],
                             claims: claims,
-                            expires: DateTime.UtcNow.AddMinutes(15),
+                            expires: DateTime.UtcNow.AddHours(1),
                             signingCredentials: creds
                         );
 

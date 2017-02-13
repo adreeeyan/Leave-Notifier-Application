@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using LeaveNotifierApplication.Data;
+using LeaveNotifierApplication.Data.Models;
 
 namespace LeaveNotifierApplication.Data.Migrations
 {
@@ -13,7 +14,7 @@ namespace LeaveNotifierApplication.Data.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
+                .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("LeaveNotifierApplication.Data.Models.Leave", b =>
@@ -46,7 +47,8 @@ namespace LeaveNotifierApplication.Data.Migrations
 
             modelBuilder.Entity("LeaveNotifierApplication.Data.Models.LeaveNotifierUser", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
 
@@ -56,7 +58,7 @@ namespace LeaveNotifierApplication.Data.Migrations
                     b.Property<DateTime>("CreatedDate");
 
                     b.Property<string>("Email")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
 
@@ -73,10 +75,10 @@ namespace LeaveNotifierApplication.Data.Migrations
                     b.Property<string>("MiddleName");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<string>("NormalizedUserName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash");
 
@@ -89,7 +91,7 @@ namespace LeaveNotifierApplication.Data.Migrations
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
@@ -105,20 +107,22 @@ namespace LeaveNotifierApplication.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
                     b.Property<string>("Name")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
+                        .IsUnique()
                         .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
@@ -190,8 +194,6 @@ namespace LeaveNotifierApplication.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("AspNetUserRoles");
                 });
 
@@ -208,79 +210,6 @@ namespace LeaveNotifierApplication.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("OpenIddict.OpenIddictApplication", b =>
-                {
-                    b.Property<string>("Id");
-
-                    b.Property<string>("ClientId");
-
-                    b.Property<string>("ClientSecret");
-
-                    b.Property<string>("DisplayName");
-
-                    b.Property<string>("LogoutRedirectUri");
-
-                    b.Property<string>("RedirectUri");
-
-                    b.Property<string>("Type");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientId")
-                        .IsUnique();
-
-                    b.ToTable("OpenIddictApplications");
-                });
-
-            modelBuilder.Entity("OpenIddict.OpenIddictAuthorization", b =>
-                {
-                    b.Property<string>("Id");
-
-                    b.Property<string>("Scope");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("OpenIddictAuthorizations");
-                });
-
-            modelBuilder.Entity("OpenIddict.OpenIddictScope", b =>
-                {
-                    b.Property<string>("Id");
-
-                    b.Property<string>("Description");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OpenIddictScopes");
-                });
-
-            modelBuilder.Entity("OpenIddict.OpenIddictToken", b =>
-                {
-                    b.Property<string>("Id");
-
-                    b.Property<string>("ApplicationId");
-
-                    b.Property<string>("AuthorizationId");
-
-                    b.Property<string>("Type");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationId");
-
-                    b.HasIndex("AuthorizationId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("OpenIddictTokens");
                 });
 
             modelBuilder.Entity("LeaveNotifierApplication.Data.Models.Leave", b =>
@@ -325,28 +254,6 @@ namespace LeaveNotifierApplication.Data.Migrations
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("OpenIddict.OpenIddictAuthorization", b =>
-                {
-                    b.HasOne("LeaveNotifierApplication.Data.Models.LeaveNotifierUser")
-                        .WithMany("Authorizations")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("OpenIddict.OpenIddictToken", b =>
-                {
-                    b.HasOne("OpenIddict.OpenIddictApplication")
-                        .WithMany("Tokens")
-                        .HasForeignKey("ApplicationId");
-
-                    b.HasOne("OpenIddict.OpenIddictAuthorization")
-                        .WithMany("Tokens")
-                        .HasForeignKey("AuthorizationId");
-
-                    b.HasOne("LeaveNotifierApplication.Data.Models.LeaveNotifierUser")
-                        .WithMany("Tokens")
-                        .HasForeignKey("UserId");
                 });
         }
     }

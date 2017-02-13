@@ -18,12 +18,7 @@
     "Swashbuckle": "6.0.0-beta902",
     "LeaveNotifierApplication.Data": {
       "target": "project"
-    },
-    "AspNet.Security.OAuth.Introspection": "1.0.0-alpha3-final",
-    "AspNet.Security.OAuth.Validation": "1.0.0-alpha3-final",
-    "OpenIddict": "1.0.0-*",
-    "OpenIddict.EntityFrameworkCore": "1.0.0-*",
-    "OpenIddict.Mvc": "1.0.0-*"
+    }
   },
   "tools": {
     "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.0.0-preview2-final"

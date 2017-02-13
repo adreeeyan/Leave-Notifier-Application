@@ -40,7 +40,7 @@ namespace LeaveNotifierApplication.Controllers
         {
             try
             {
-                var items = _repo.GetAllLeaves().SortBy(sortOrder, asc).Where(searchKey, searchValue, isFull);;
+                var items = _repo.GetAllLeaves().SortBy(sortOrder, asc).Where(searchKey, searchValue, isFull);
                 var leaves = _mapper.Map<IEnumerable<LeaveModel>>(items);
                 return Ok(leaves);
             }
@@ -78,7 +78,7 @@ namespace LeaveNotifierApplication.Controllers
                 {
                     return NotFound($"User {userName} not found");
                 }
-                var items = _repo.GetLeavesByUserName(userName).SortBy(sortOrder, asc).Where(searchKey, searchValue, isFull);;
+                var items = _repo.GetLeavesByUserName(userName).SortBy(sortOrder, asc).Where(searchKey, searchValue, isFull);
                 var leaves = _mapper.Map<IEnumerable<LeaveModel>>(items);
                 return Ok(leaves);
             }

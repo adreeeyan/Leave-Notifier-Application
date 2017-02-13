@@ -26,7 +26,7 @@ namespace LeaveNotifierApplication.Controllers
             _mapper = mapper;
         }
 
-        [Authorize(Roles = "administrator")]
+        [Authorize(Policy = "SuperUsers")]
         [HttpGet]
         public IActionResult Get(string[] searchKey, string[] searchValue, bool[] isFull, string sortOrder = "CreatedDate", bool asc = false)
         {

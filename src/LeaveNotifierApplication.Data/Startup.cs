@@ -31,8 +31,10 @@ namespace LeaveNotifierApplication.Data
             services.AddSingleton(_config);
 
             // Add the DB Context
-            services.AddDbContext<LeaveNotifierDbContext>(ServiceLifetime.Scoped)
-                .AddIdentity<LeaveNotifierUser, IdentityRole>();
+            services.AddDbContext<LeaveNotifierDbContext>(ServiceLifetime.Scoped);
+
+            services.AddIdentity<LeaveNotifierUser, IdentityRole>()
+                .AddEntityFrameworkStores<LeaveNotifierDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
