@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using LeaveNotifierApplication.Filters;
 using Microsoft.AspNetCore.Identity;
 using LeaveNotifierApplication.Data.Models;
-using LeaveNotifierApplication.Data.Extensions;
 using System.Threading.Tasks;
 
 namespace LeaveNotifierApplication.Controllers
@@ -36,11 +35,11 @@ namespace LeaveNotifierApplication.Controllers
         }
 
         [HttpGet("[controller]")]
-        public IActionResult Get([FromQuery] QueryModel query)
+        public IActionResult Get([FromQuery] QueryModel<Leave> query)
         {
             try
             {
-                var items = _repo.GetAllLeaves().SortBy(query.SortOrder, query.IsAsc).Where(query.SearchKey, query.SearchValue, query.IsFull);
+                var items = QueryModel<Leave>.Query(_repo.GetAllLeaves(), query);
                 var leaves = _mapper.Map<IEnumerable<LeaveModel>>(items);
                 return Ok(leaves);
             }
@@ -68,7 +67,7 @@ namespace LeaveNotifierApplication.Controllers
         }
 
         [HttpGet("users/{userName}/[controller]")]
-        public async Task<IActionResult> GetLeavesByUserName(string userName, [FromQuery] QueryModel query)
+        public async Task<IActionResult> GetLeavesByUserName(string userName, [FromQuery] QueryModel<Leave> query)
         {
             try
             {
@@ -78,7 +77,7 @@ namespace LeaveNotifierApplication.Controllers
                 {
                     return NotFound($"User {userName} not found");
                 }
-                var items = _repo.GetLeavesByUserName(userName).SortBy(query.SortOrder, query.IsAsc).Where(query.SearchKey, query.SearchValue, query.IsFull);
+                var items = QueryModel<Leave>.Query(_repo.GetLeavesByUserName(userName), query);
                 var leaves = _mapper.Map<IEnumerable<LeaveModel>>(items);
                 return Ok(leaves);
             }

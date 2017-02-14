@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using LeaveNotifierApplication.Models;
-using LeaveNotifierApplication.Data.Extensions;
+using LeaveNotifierApplication.Data.Models;
 
 namespace LeaveNotifierApplication.Controllers
 {
@@ -28,11 +28,11 @@ namespace LeaveNotifierApplication.Controllers
 
         [Authorize(Policy = "SuperUsers")]
         [HttpGet]
-        public IActionResult Get([FromQuery] QueryModel query)
+        public IActionResult Get([FromQuery] QueryModel<LeaveNotifierUser> query)
         {
             try
             {
-                var items = _repo.GetAllUsers().SortBy(query.SortOrder, query.IsAsc).Where(query.SearchKey, query.SearchValue, query.IsFull);
+                var items = QueryModel<LeaveNotifierUser>.Query(_repo.GetAllUsers(), query);
                 var users = _mapper.Map<IEnumerable<LeaveNotifierUserModel>>(items);
                 return Ok(users);
             }
