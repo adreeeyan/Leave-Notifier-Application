@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
 using LeaveNotifierApplication.Data;
-using LeaveNotifierApplication.Models;
+using LeaveNotifierApplication.Api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using LeaveNotifierApplication.Filters;
+using LeaveNotifierApplication.Api.Filters;
 using Microsoft.AspNetCore.Identity;
 using LeaveNotifierApplication.Data.Models;
 using System.Threading.Tasks;
 
-namespace LeaveNotifierApplication.Controllers
+namespace LeaveNotifierApplication.Api.Controllers
 {
     [Route("api")]
     [Authorize]

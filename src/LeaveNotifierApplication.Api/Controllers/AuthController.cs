@@ -6,14 +6,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading.Tasks;
-using LeaveNotifierApplication.Models;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using System;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using LeaveNotifierApplication.Api.Models;
 
-namespace LeaveNotifierApplication.Controllers
+namespace LeaveNotifierApplication.Api.Controllers
 {
     /// <summary>
     /// Authentication and Authorization API

@@ -12,11 +12,11 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Swashbuckle.AspNetCore.Swagger;
-using LeaveNotifierApplication.Filters;
+using LeaveNotifierApplication.Api.Filters;
 using Microsoft.Extensions.PlatformAbstractions;
 using System.IO;
 
-namespace LeaveNotifierApplication
+namespace LeaveNotifierApplication.Api
 {
     public class Startup
     {
@@ -86,6 +86,9 @@ namespace LeaveNotifierApplication
                 cfg.AddPolicy("SuperUsers", p => p.RequireClaim("SuperUser", "True"));
             });
 
+            // Add CORS
+            services.AddCors();
+
             // Add framework services.
             services.AddMvc();
 
@@ -99,10 +102,10 @@ namespace LeaveNotifierApplication
                     Description = "API Usage",
                     TermsOfService = "None"
                 });
-                
+
                 // Set comments
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                var xmlPath = Path.Combine(basePath, "LeaveNotifierApplication.xml"); 
+                var xmlPath = Path.Combine(basePath, "LeaveNotifierApplication.Api.xml");
                 options.IncludeXmlComments(xmlPath);
 
                 options.OperationFilter<SwaggerOperationFilter>();
@@ -134,6 +137,14 @@ namespace LeaveNotifierApplication
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"])),
                     ValidateLifetime = true
                 }
+            });
+
+            // Use CORS
+            app.UseCors(cfg =>
+            {
+                cfg.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin();
             });
 
             app.UseMvc();

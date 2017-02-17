@@ -1,0 +1,24 @@
+before_script:
+  - cd src
+  - dotnet restore
+
+create_database:
+  script:
+    - cd LeaveNotifierApplication.Data
+    - dotnet ef database update
+  allow_failure: false
+  stage: build
+
+build_api:
+  script:
+    - cd LeaveNotifierApplication.Api
+    - dotnet build
+  allow_failure: false
+  stage: build
+
+test_api:
+  script:
+    - cd LeaveNotifierApplication.Api.Tests
+    - dotnet test
+  allow_failure: false
+  stage: test

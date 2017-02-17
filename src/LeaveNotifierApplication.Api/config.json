@@ -1,0 +1,23 @@
+﻿{
+  "Logging": {
+    "IncludeScopes": false,
+    "LogLevel": {
+      "Default": "Debug",
+      "System": "Information",
+      "Microsoft": "Information"
+    }
+  },
+  "ConnectionStrings": {
+    "Windows": {
+      "LeaveNotifierDbContextConnection": "Server=(localdb)\\MSSQLLocalDb;Database=LeaveNotifierDb;Trusted_Connection=true;MultipleActiveResultSets=true;"
+    },
+    "Linux":{
+      "LeaveNotifierDbContextConnection": "Data source=leavesdb.sqlite"
+    }
+  },
+  "Tokens": {
+    "Issuer": "http://localhost:5000",
+    "Audience": "http://localhost:5000",
+    "Key": "t231h-12is4398i91s0a2385se0*c**12r910e3t"
+  }
+}

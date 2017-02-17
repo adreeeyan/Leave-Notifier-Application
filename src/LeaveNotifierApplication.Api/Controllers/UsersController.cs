@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using LeaveNotifierApplication.Models;
+using LeaveNotifierApplication.Api.Models;
 using LeaveNotifierApplication.Data.Models;
 
-namespace LeaveNotifierApplication.Controllers
+namespace LeaveNotifierApplication.Api.Controllers
 {
     [Route("api/[controller]")]
     public class UsersController : Controller

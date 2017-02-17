@@ -6,9 +6,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/src/LeaveNotifierApplication/bin/Debug/netcoreapp1.1/LeaveNotifierApplication.dll",
+            "program": "${workspaceRoot}/src/LeaveNotifierApplication.Api/bin/Debug/netcoreapp1.1/LeaveNotifierApplication.Api.dll",
             "args": [],
-            "cwd": "${workspaceRoot}/src/LeaveNotifierApplication",
+            "cwd": "${workspaceRoot}/src/LeaveNotifierApplication.Api",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
             // "launchBrowser": {
